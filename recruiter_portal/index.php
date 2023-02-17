@@ -34,7 +34,7 @@
 <body class="theme-orange font-montserrat">
 
     <!-- Page Loader -->
-    <div class="page-loader-wrapper" id="pageLoader">
+    <div class="page-loader-wrapper">
         <div class="loader">
             <div class="bar1"></div>
             <div class="bar2"></div>
@@ -72,11 +72,11 @@
             <?php
             if ($_GET['page']) {
                 $page = $_GET['page'];
-                $display = 'pages/' . $page . '.php';
+                $display = $page . '.php';
                 include($display);
-            } 
-            
-                // include("pages/dashboard.php");
+            } else {
+                echo 'Sample heheheheh';
+            }
             ?>
 
         </div>
@@ -90,35 +90,35 @@
     <script src="../sources/html/assets/bundles/c3.bundle.js"></script>
     <script src="../sources/html/assets/bundles/jvectormap.bundle.js"></script>
 
+    <?php
+    if ($_GET['page'] == 'applicants' || $_GET['page'] == 'positions' || $_GET['page'] == 'resumes') :
+    ?>
+        <!-- For applicants, positions, resumes -->
+        <script src="../sources/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+    <?php
+    endif;
+    ?>
+
+    <?php
+    if ($_GET['page'] == 'add_applicant' || $_GET['page'] == 'settings') :
+    ?>
+        <!-- For add_applicant, settings -->
+        <script src="../sources/assets/vendor/dropify/js/dropify.min.js"></script>
+        <script src="../sources/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script><!-- bootstrap datepicker Plugin Js -->
+
+        <script src="../sources/html/assets/js/pages/forms/dropify.js"></script>
+    <?php
+    endif;
+    ?>
+
+
     <script src="../sources/html/assets/bundles/mainscripts.bundle.js"></script>
     <script src="../sources/html/assets/js/jobdashboard.js"></script>
- 
-    <script type="text/javascript">
 
-
-        // Load Page
-        $(function(){
-    
-            var trigger = $("#left-sidebar-nav ul li a");
-
-            trigger.on('click', function(){
-                let target = $(this).data('target');
-                $("#main-content").load("pages/" + target + ".php");
-                $('#left-sidebar-nav ul li').removeClass("active");
-                $('#' + target + 'Nav').addClass('active');
-                window.history.pushState('', '', "?page=" + target);
-
-                return false;
-            });
-
+    <script>
+        $('#multiselect3-all').multiselect({
+            includeSelectAllOption: true,
         });
-        
-        
-
-        // $('#multiselect3-all').multiselect({
-        //     includeSelectAllOption: true,
-        // });
-
 
         function addUrlParameter(name, value) {
             var searchParams = new URLSearchParams(window.location.search);
